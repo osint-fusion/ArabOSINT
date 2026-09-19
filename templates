@@ -3,74 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArabOSINT - أداة الاستخبارات المفتوحة</title>
+    <title>ArabOSINT - منصة الاستخبارات المفتوحة</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #ffffff; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .container { background-color: #1e1e1e; padding: 30px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.5); width: 100%; max-width: 700px; }
-        h1 { color: #00ffcc; text-align: center; margin-bottom: 5px; }
-        p.subtitle { text-align: center; color: #aaaaaa; margin-bottom: 25px; font-size: 14px; }
-        .disclaimer { background-color: #332b00; border-right: 5px solid #ffcc00; padding: 15px; margin-bottom: 20px; font-size: 13px; color: #ffdd44; border-radius: 4px; line-height: 1.5; }
-        label { display: block; margin-bottom: 8px; color: #dddddd; font-weight: bold; }
-        select, input { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #333333; border-radius: 6px; background-color: #2a2a2a; color: #ffffff; font-size: 15px; box-sizing: border-box; outline: none; }
-        select:focus, input:focus { border-color: #00ffcc; }
-        button { width: 100%; padding: 14px; background-color: #00b38f; border: none; border-radius: 6px; color: #ffffff; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease; }
-        button:hover { background-color: #00ffcc; color: #121212; }
-        pre { background-color: #0d0d0d; border: 1px solid #333333; padding: 15px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; font-family: 'Courier New', Courier, monospace; min-height: 120px; margin-top: 20px; color: #00ff00; direction: ltr; text-align: left; }
-        .loader { display: none; text-align: center; color: #00ffcc; margin-top: 15px; font-weight: bold; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #2c3e50; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { background: #ffffff; border-radius: 12px; padding: 35px; width: 100%; max-width: 680px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-top: 6px solid #0056b3; }
+        h1 { color: #0056b3; margin: 0 0 5px 0; font-size: 28px; text-align: center; }
+        .author { text-align: center; color: #6c757d; font-size: 14px; margin-bottom: 25px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; color: #34495e; }
+        select, input { width: 100%; padding: 12px 15px; border: 1px solid #ced4da; border-radius: 8px; font-size: 15px; background-color: #fff; outline: none; transition: all 0.3s ease; }
+        select:focus, input:focus { border-color: #0056b3; box-shadow: 0 0 0 3px rgba(0,86,179,0.1); }
+        .phone-group { display: none; gap: 10px; }
+        .phone-group select { flex: 1.5; }
+        .phone-group input { flex: 2; }
+        button { width: 100%; padding: 14px; background-color: #0056b3; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease; }
+        button:hover { background-color: #004085; }
+        .loader { display: none; text-align: center; color: #0056b3; margin-top: 15px; font-weight: 600; font-size: 14px; }
+        pre { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 18px; margin-top: 20px; white-space: pre-wrap; font-family: 'Courier New', Courier, monospace; font-size: 14px; color: #1a252f; direction: ltr; text-align: left; min-height: 120px; max-height: 400px; overflow-y: auto; }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="card">
         <h1>ArabOSINT</h1>
-        <p class="subtitle">منصة الاستخبارات المفتوحة الموحدة</p>
-        
-        <div class="disclaimer">
-            <strong>تنبيه أخلاقي وقانوني:</strong> هذا المشروع تم تطويره لأغراض الأبحاث الأمنية، واختبار الاختراق الأخلاقي، والتحقيقات المصرح بها فقط. الاستخدام غير المصرح به ضد أفراد أو جهات يعتبر انتهاكاً للخصوصية ومخالفاً للقانون.
+        <div class="author">منصة الاستخبارات مفتوحة المصدر الموحدة | برمجة وتطوير: <b>علي ماهر محي</b></div>
+
+        <div class="form-group">
+            <label for="tool">اختر أداة الفحص:</label>
+            <select id="tool" onchange="handleToolChange()">
+                <option value="sherlock">البحث عن اسم مستخدم (Username) - Sherlock</option>
+                <option value="holehe">البحث عن حسابات مرتبطة ببريد (Email) - Holehe</option>
+                <option value="phone">تحليل بيانات رقم هاتف (Phone OSINT) - Phonenumbers</option>
+            </select>
         </div>
 
-        <label for="tool">اختر نوع الاستهداف:</label>
-        <select id="tool">
-            <option value="sherlock">البحث عن اسم مستخدم (Username) - عبر Sherlock</option>
-            <option value="holehe">البحث عن حسابات مرتبطة بإيميل (Email) - عبر Holehe</option>
-            <option value="phone">تحليل بيانات رقم هاتف (Phone Number) - عبر Phonenumbers</option>
-        </select>
+        <div class="form-group" id="standard-group">
+            <label for="target">أدخل الهدف:</label>
+            <input type="text" id="target" placeholder="اكتب اسم المستخدم أو البريد الإلكتروني...">
+        </div>
 
-        <label for="target">أدخل الهدف:</label>
-        <input type="text" id="target" placeholder="اكتب اليوزر، الإيميل، أو رقم الهاتف (مع رمز الدولة +)...">
+        <div class="form-group phone-group" id="phone-group">
+            <select id="country-code">
+                <option value="+964">العراق (+964)</option>
+                <option value="+966">السعودية (+966)</option>
+                <option value="+20">مصر (+20)</option>
+                <option value="+971">الإمارات (+971)</option>
+                <option value="+962">الأردن (+962)</option>
+                <option value="+965">الكويت (+965)</option>
+                <option value="+212">المغرب (+212)</option>
+                <option value="+213">الجزائر (+213)</option>
+                <option value="+968">عُمان (+968)</option>
+                <option value="+974">قطر (+974)</option>
+                <option value="+1">أمريكا / كندا (+1)</option>
+                <option value="+44">المملكة المتحدة (+44)</option>
+            </select>
+            <input type="text" id="phone-num" placeholder="رقم الهاتف بدون رمز الدولة...">
+        </div>
 
-        <button onclick="runTool()">بدء الفحص</button>
-        <div class="loader" id="loader">جاري الفحص واستخراج البيانات، يرجى الانتظار...</div>
+        <button onclick="executeSearch()">بدء الفحص</button>
+        <div class="loader" id="loader">⏳ جاري تنفيذ الفحص واستخراج البيانات، يرجى الانتظار...</div>
 
-        <pre id="output">النتائج ستظهر هنا...</pre>
+        <pre id="output">نتائج الفحص ستظهر هنا...</pre>
     </div>
 
     <script>
-        async function runTool() {
-            const target = document.getElementById('target').value;
+        function handleToolChange() {
             const tool = document.getElementById('tool').value;
+            const standardGroup = document.getElementById('standard-group');
+            const phoneGroup = document.getElementById('phone-group');
+            
+            if (tool === 'phone') {
+                standardGroup.style.display = 'none';
+                phoneGroup.style.display = 'flex';
+            } else {
+                standardGroup.style.display = 'block';
+                phoneGroup.style.display = 'none';
+            }
+        }
+
+        async function executeSearch() {
+            const tool = document.getElementById('tool').value;
+            let target = '';
+
+            if (tool === 'phone') {
+                const code = document.getElementById('country-code').value;
+                const num = document.getElementById('phone-num').value.trim();
+                if (!num) { alert('يرجى إدخال رقم الهاتف.'); return; }
+                target = code + num;
+            } else {
+                target = document.getElementById('target').value.trim();
+                if (!target) { alert('يرجى إدخال اسم المستخدم أو البريد.'); return; }
+            }
+
             const output = document.getElementById('output');
             const loader = document.getElementById('loader');
             
-            if (!target) {
-                alert("الرجاء إدخال الهدف أولاً.");
-                return;
-            }
-
             output.textContent = '';
             loader.style.display = 'block';
-            
+
             try {
-                const response = await fetch('/api/search', {
+                const res = await fetch('/api/search', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ target, tool })
                 });
-                const data = await response.json();
+                const data = await res.json();
                 loader.style.display = 'none';
                 output.textContent = data.result || data.error;
             } catch (err) {
                 loader.style.display = 'none';
-                output.textContent = 'حدث خطأ في الاتصال بالسيرفر المحلي.';
+                output.textContent = '❌ حدث خطأ أثناء الاتصال بالسيرفر المحلي.';
             }
         }
     </script>
