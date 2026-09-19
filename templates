@@ -1,3 +1,4 @@
+cat << 'EOF' > templates/index.html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -5,116 +6,222 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArabOSINT - منصة الاستخبارات المفتوحة</title>
     <style>
-        * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #2c3e50; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .card { background: #ffffff; border-radius: 12px; padding: 35px; width: 100%; max-width: 680px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-top: 6px solid #0056b3; }
-        h1 { color: #0056b3; margin: 0 0 5px 0; font-size: 28px; text-align: center; }
-        .author { text-align: center; color: #6c757d; font-size: 14px; margin-bottom: 25px; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; color: #34495e; }
-        select, input { width: 100%; padding: 12px 15px; border: 1px solid #ced4da; border-radius: 8px; font-size: 15px; background-color: #fff; outline: none; transition: all 0.3s ease; }
-        select:focus, input:focus { border-color: #0056b3; box-shadow: 0 0 0 3px rgba(0,86,179,0.1); }
-        .phone-group { display: none; gap: 10px; }
-        .phone-group select { flex: 1.5; }
-        .phone-group input { flex: 2; }
-        button { width: 100%; padding: 14px; background-color: #0056b3; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease; }
-        button:hover { background-color: #004085; }
-        .loader { display: none; text-align: center; color: #0056b3; margin-top: 15px; font-weight: 600; font-size: 14px; }
-        pre { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 18px; margin-top: 20px; white-space: pre-wrap; font-family: 'Courier New', Courier, monospace; font-size: 14px; color: #1a252f; direction: ltr; text-align: left; min-height: 120px; max-height: 400px; overflow-y: auto; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #1a1a1a;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background-color: #ffffff;
+            border: 1px solid #e1e5eb;
+            border-radius: 8px;
+            padding: 35px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        h1 {
+            color: #0f172a;
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+        .subtitle {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+        select, input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background-color: #ffffff;
+            color: #0f172a;
+            font-size: 14px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        select:focus, input:focus {
+            border-color: #475569;
+        }
+        .phone-input-group {
+            display: flex;
+            gap: 10px;
+        }
+        .phone-input-group select {
+            width: 35%;
+        }
+        .phone-input-group input {
+            width: 65%;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #0f172a;
+            border: none;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #334155;
+        }
+        .output-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 16px;
+            margin-top: 25px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 13px;
+            color: #0f172a;
+            white-space: pre-wrap;
+            word-break: break-all;
+            min-height: 180px;
+            max-height: 450px;
+            overflow-y: auto;
+            direction: ltr;
+            text-align: left;
+        }
+        .loader {
+            display: none;
+            text-align: center;
+            color: #475569;
+            font-size: 14px;
+            margin-top: 15px;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>ArabOSINT</h1>
-        <div class="author">منصة الاستخبارات مفتوحة المصدر الموحدة | برمجة وتطوير: <b>علي ماهر محي</b></div>
+    <div class="container">
+        <h1>ArabOSINT Unified Framework</h1>
+        <div class="subtitle">منصة التحقيق والاستخبارات المفتوحة المصدر</div>
 
         <div class="form-group">
-            <label for="tool">اختر أداة الفحص:</label>
-            <select id="tool" onchange="handleToolChange()">
-                <option value="sherlock">البحث عن اسم مستخدم (Username) - Sherlock</option>
-                <option value="holehe">البحث عن حسابات مرتبطة ببريد (Email) - Holehe</option>
-                <option value="phone">تحليل بيانات رقم هاتف (Phone OSINT) - Phonenumbers</option>
+            <label for="scan_type">نوع العملية والمهمة:</label>
+            <select id="scan_type" onchange="toggleInputs()">
+                <option value="full_scan">فحص شامل وتجميعي (جميع الأدوات الـ 20 معاً)</option>
+                <option value="email_search">البحث عن الحسابات المرتبطة بالإيميل (Email Search)</option>
+                <option value="email_info">جمع ومعلومات تسريبات البريد (Email Intelligence)</option>
+                <option value="phone_info">بحث ومعلومات رقم الهاتف (Phone Intelligence)</option>
+                <option value="phone_to_email">البحث عن الإيميلات المرتبطة بالرقم (Phone to Email)</option>
+                <option value="email_to_phone">البحث عن أرقام الهواتف المرتبطة بالإيميل (Email to Phone)</option>
             </select>
         </div>
 
-        <div class="form-group" id="standard-group">
-            <label for="target">أدخل الهدف:</label>
-            <input type="text" id="target" placeholder="اكتب اسم المستخدم أو البريد الإلكتروني...">
+        <div class="form-group" id="phone_group" style="display: none;">
+            <label>رمز الدولة ورقم الهاتف:</label>
+            <div class="phone-input-group">
+                <select id="country_code">
+                    <option value="+964">العراق (+964)</option>
+                    <option value="+966">السعودية (+966)</option>
+                    <option value="+971">الإمارات (+971)</option>
+                    <option value="+20">مصر (+20)</option>
+                    <option value="+962">الأردن (+962)</option>
+                    <option value="+965">الكويت (+965)</option>
+                    <option value="+974">قطر (+974)</option>
+                    <option value="+968">عُمان (+968)</option>
+                    <option value="+973">البحرين (+973)</option>
+                    <option value="+961">لبنان (+961)</option>
+                    <option value="+212">المغرب (+212)</option>
+                    <option value="+213">الجزائر (+213)</option>
+                    <option value="+216">تونس (+216)</option>
+                </select>
+                <input type="text" id="phone_target" placeholder="اكتب رقم الهاتف بدون الصفر الأول (مثال: 7701234567)">
+            </div>
         </div>
 
-        <div class="form-group phone-group" id="phone-group">
-            <select id="country-code">
-                <option value="+964">العراق (+964)</option>
-                <option value="+966">السعودية (+966)</option>
-                <option value="+20">مصر (+20)</option>
-                <option value="+971">الإمارات (+971)</option>
-                <option value="+962">الأردن (+962)</option>
-                <option value="+965">الكويت (+965)</option>
-                <option value="+212">المغرب (+212)</option>
-                <option value="+213">الجزائر (+213)</option>
-                <option value="+968">عُمان (+968)</option>
-                <option value="+974">قطر (+974)</option>
-                <option value="+1">أمريكا / كندا (+1)</option>
-                <option value="+44">المملكة المتحدة (+44)</option>
-            </select>
-            <input type="text" id="phone-num" placeholder="رقم الهاتف بدون رمز الدولة...">
+        <div class="form-group" id="standard_group">
+            <label for="target">الهدف (الإيميل أو اسم المستخدم):</label>
+            <input type="text" id="target" placeholder="أدخل البريد الإلكتروني أو اليوزر...">
         </div>
 
-        <button onclick="executeSearch()">بدء الفحص</button>
-        <div class="loader" id="loader">⏳ جاري تنفيذ الفحص واستخراج البيانات، يرجى الانتظار...</div>
+        <button onclick="runScan()">تنفيذ الفحص الموحد</button>
+        <div class="loader" id="loader">جاري الاستعلام وتجميع البيانات من أدوات OSINT المختلفة...</div>
 
-        <pre id="output">نتائج الفحص ستظهر هنا...</pre>
+        <div class="output-box" id="output">نتائج التحليل وتقرير البيانات ستظهر هنا...</div>
     </div>
 
     <script>
-        function handleToolChange() {
-            const tool = document.getElementById('tool').value;
-            const standardGroup = document.getElementById('standard-group');
-            const phoneGroup = document.getElementById('phone-group');
-            
-            if (tool === 'phone') {
+        function toggleInputs() {
+            const scanType = document.getElementById('scan_type').value;
+            const phoneGroup = document.getElementById('phone_group');
+            const standardGroup = document.getElementById('standard_group');
+
+            if (scanType === 'phone_info' || scanType === 'phone_to_email') {
+                phoneGroup.style.display = 'block';
                 standardGroup.style.display = 'none';
-                phoneGroup.style.display = 'flex';
             } else {
-                standardGroup.style.display = 'block';
                 phoneGroup.style.display = 'none';
+                standardGroup.style.display = 'block';
             }
         }
 
-        async function executeSearch() {
-            const tool = document.getElementById('tool').value;
+        async function runScan() {
+            const scanType = document.getElementById('scan_type').value;
+            const countryCode = document.getElementById('country_code').value;
             let target = '';
 
-            if (tool === 'phone') {
-                const code = document.getElementById('country-code').value;
-                const num = document.getElementById('phone-num').value.trim();
-                if (!num) { alert('يرجى إدخال رقم الهاتف.'); return; }
-                target = code + num;
+            if (scanType === 'phone_info' || scanType === 'phone_to_email') {
+                target = document.getElementById('phone_target').value.trim();
             } else {
                 target = document.getElementById('target').value.trim();
-                if (!target) { alert('يرجى إدخال اسم المستخدم أو البريد.'); return; }
+            }
+
+            if (!target) {
+                alert('الرجاء إدخال بيانات الهدف.');
+                return;
             }
 
             const output = document.getElementById('output');
             const loader = document.getElementById('loader');
-            
+
             output.textContent = '';
             loader.style.display = 'block';
 
             try {
-                const res = await fetch('/api/search', {
+                const response = await fetch('/api/search', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ target, tool })
+                    body: JSON.stringify({
+                        target: target,
+                        country_code: countryCode,
+                        scan_type: scanType
+                    })
                 });
-                const data = await res.json();
+
+                const data = await response.json();
                 loader.style.display = 'none';
                 output.textContent = data.result || data.error;
             } catch (err) {
                 loader.style.display = 'none';
-                output.textContent = '❌ حدث خطأ أثناء الاتصال بالسيرفر المحلي.';
+                output.textContent = 'حدث خطأ أثناء الاتصال بالسيرفر المحلي.';
             }
         }
     </script>
 </body>
 </html>
+EOF
