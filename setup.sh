@@ -1,25 +1,31 @@
 #!/bin/bash
-echo "[+] جاري إعداد بيئة ArabOSINT..."
 
-# التحقق من وجود python3-venv وتثبيته إذا لم يكن موجوداً
-if ! dpkg -s python3-venv >/dev/null 2>&1; then
-    echo "[!] حزمة python3-venv غير موجودة. جاري التثبيت (قد يتطلب كلمة مرور الجذر)..."
-    sudo apt-get update && sudo apt-get install python3-venv -y
+echo "=================================================="
+echo "[+] جاري إعداد وتحديث بيئة أداة ArabOSINT..."
+echo "=================================================="
+
+# إنشاء البيئة الافتراضية إذا لم تكن موجودة
+if [ ! -d "venv" ]; then
+    echo "[+] إنشاء البيئة الافتراضية (Virtual Environment)..."
+    python3 -m venv venv
 fi
 
-echo "[+] إنشاء البيئة الافتراضية (Virtual Environment)..."
-python3 -m venv venv
-
+# تفعيل البيئة الافتراضية
 echo "[+] تفعيل البيئة الافتراضية..."
 source venv/bin/activate
 
-echo "[+] تثبيت الأدوات والمكتبات الأساسية (Flask, Sherlock, Holehe, Phonenumbers)..."
+# تحديث مدير الحزم pip وتثبيت المكتبات
+echo "[+] تثبيت وتحديث جميع أدوات ومكتبات OSINT..."
 pip install --upgrade pip
 pip install -r requirements.txt
 
+# إنشاء مجلد templates إذا لم يكن موجوداً
+mkdir -p templates
+
 echo "=================================================="
-echo "[+] تم التثبيت بنجاح!"
-echo "[+] لتشغيل الأداة في أي وقت، اتبع الخطوتين التاليتين:"
-echo "1. source venv/bin/activate"
-echo "2. python3 app.py"
+echo "[+] تم إعداد وتثبيت جميع الأدوات بنجاح!"
+echo "[+] لتشغيل الأداة استخدم الأوامر التالية:"
+echo "    source venv/bin/activate"
+echo "    python3 app.py"
 echo "=================================================="
+EOF
