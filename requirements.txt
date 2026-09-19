@@ -2,3 +2,4 @@ Flask>=3.0.0
 sherlock-project>=0.14.0
 holehe>=1.60
 phonenumbers>=8.13.0
+requests>=2.31.0
